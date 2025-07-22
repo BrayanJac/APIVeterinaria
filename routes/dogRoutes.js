@@ -33,16 +33,11 @@ router.post("/dog", async (req, res) => {
       return res.status(400).json({ message: "birth_date is invalid" });
     }
 
-    const humanAge = calculateHumanAge(birthDateObj);
-    const dogAge = calculateDogAge(humanAge);
-
     const newDog = new Dog({
       idDog,
       name,
       breed,
       birth_date: birthDateObj,
-      human_age: humanAge,
-      dog_age: dogAge,
       gender,
       owner,
       phone,
@@ -64,6 +59,17 @@ router.get("/dogs", async (req, res) => {
   } catch (error) {
     console.error("Error in /dogs route:", error);
     res.status(500).json({ message: "Error fetching dogs" });
+  }
+});
+
+router.get("/dog", async (req, res) => {
+  try {
+    const dog = await Dog.findById(req.params.id);
+    if (!dog) return res.status(404).json({ message: "Dog not found" });
+    res.json(dog);
+  } catch (error) {
+    console.error("Error in /dog route:", error);
+    res.status(500).json({ message: "Error fetching dog" });
   }
 });
 

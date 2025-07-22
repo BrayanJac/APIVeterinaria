@@ -5,8 +5,6 @@ const dogSchema = new mongoose.Schema({
   name: String,
   breed: String,
   birth_date: Date,
-  human_age: Number,
-  dog_age: Number,
   gender: String,
   owner: String,
   phone: String,
